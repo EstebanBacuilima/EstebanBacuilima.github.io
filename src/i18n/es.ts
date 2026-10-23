@@ -80,7 +80,6 @@ export const es = {
   },
   footer: {
     rights: 'Esteban David Bacuilima Pérez',
-    built: 'Hecho con Astro y Tailwind CSS',
     top: 'Volver arriba',
   },
 };
