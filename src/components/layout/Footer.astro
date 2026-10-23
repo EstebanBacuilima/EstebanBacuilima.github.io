@@ -34,13 +34,13 @@ const links = [
         {
           links.map((l) => (
             <li>
-              <a href={l.href} class="hover:text-mint">
+              <a href={l.href} class="link-u hover:text-mint">
                 {l.label}
               </a>
             </li>
           ))
         }
-        <li><a href="#top" class="hover:text-mint">{dict.footer.top}</a></li>
+        <li><a href="#top" class="link-u hover:text-mint">{dict.footer.top}</a></li>
       </ul>
     </nav>
     <ul class="flex gap-3 text-muted">
@@ -50,7 +50,7 @@ const links = [
           target="_blank"
           rel="noopener noreferrer"
           aria-label="GitHub"
-          class="hover:text-mint"><Icon name="github" /></a>
+          class="inline-block transition hover:-translate-y-0.5 hover:text-mint"><Icon name="github" /></a>
       </li>
       <li>
         <a
@@ -58,7 +58,7 @@ const links = [
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"
-          class="hover:text-mint"><Icon name="linkedin" /></a>
+          class="inline-block transition hover:-translate-y-0.5 hover:text-mint"><Icon name="linkedin" /></a>
       </li>
     </ul>
   </div>

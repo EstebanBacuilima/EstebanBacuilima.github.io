@@ -11,10 +11,10 @@ interface Props {
 const { href, variant = 'primary', external = false, icon, class: className = '' } = Astro.props;
 
 const base =
-  'group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition duration-200 active:scale-[0.98]';
+  'group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]';
 const styles = {
-  primary: 'bg-mint text-bg hover:bg-white',
-  secondary: 'border border-line bg-card text-ink hover:border-mint/60 hover:text-mint',
+  primary: 'bg-mint text-bg hover:bg-white hover:shadow-lg hover:shadow-mint/20',
+  secondary: 'border border-line bg-card text-ink hover:border-mint/60 hover:text-mint hover:shadow-lg hover:shadow-black/30',
 };
 ---
 
@@ -23,6 +23,6 @@ const styles = {
   class:list={[base, styles[variant], className]}
   {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
 >
-  {icon && <Icon name={icon} class="size-4" />}
+  {icon && <Icon name={icon} class={`size-4 transition-transform duration-200 ${icon === 'arrow' ? 'group-hover:translate-x-1' : 'group-hover:scale-110'}`} />}
   <slot />
 </a>

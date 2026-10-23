@@ -45,8 +45,11 @@ const enUrl = new URL(homePath('en'), site).href;
   <body class="min-h-screen antialiased">
     <slot />
     <script>
-      const items = document.querySelectorAll('.reveal');
-      if ('IntersectionObserver' in window) {
+      // Reduced motion: nothing is hidden by CSS, so there is nothing to observe.
+      const items = document.querySelectorAll('.reveal, .stagger');
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        items.forEach((el) => el.classList.add('is-visible'));
+      } else if ('IntersectionObserver' in window) {
         const io = new IntersectionObserver(
           (entries) => {
             for (const entry of entries) {

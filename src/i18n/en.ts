@@ -82,7 +82,6 @@ export const en: Dict = {
   },
   footer: {
     rights: 'Esteban David Bacuilima Pérez',
-    built: 'Built with Astro and Tailwind CSS',
     top: 'Back to top',
   },
 };

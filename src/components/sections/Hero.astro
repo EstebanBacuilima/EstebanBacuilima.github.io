@@ -3,6 +3,11 @@ import { Image } from "astro:assets";
 import Button from "../ui/Button.astro";
 import Badge from "../ui/Badge.astro";
 import avatar from "../../assets/avatar/esteban.png";
+import angularIcon from "../../assets/icons/angularjs.png";
+import csharpIcon from "../../assets/icons/c-sharp.png";
+import sqlIcon from "../../assets/icons/sql.png";
+import flutterIcon from "../../assets/icons/flutter.png";
+import firebaseIcon from "../../assets/icons/firebase.png";
 import { t, type Locale } from "../../i18n/utils";
 import { site } from "../../data/site";
 
@@ -13,17 +18,20 @@ const { locale } = Astro.props;
 const dict = t(locale);
 const term = dict.hero.terminal;
 
-// Decorative chips that float around the avatar; same words as the specialties list.
-const chips = [
-  { label: "Angular", pos: "left-0 top-[18%]", delay: "0s" },
-  { label: ".NET", pos: "right-0 top-[8%]", delay: "-2s" },
-  { label: "PostgreSQL", pos: "right-[2%] top-[58%]", delay: "-4s" },
-  { label: "Flutter", pos: "left-0 top-[85%]", delay: "0s" },
+// Decorative 3D icons that float around the avatar. `pos` is relative to the avatar box;
+// `dur`/`delay` desynchronise the float and `sway` so they never move in unison.
+const techIcons = [
+  { label: "Angular", src: angularIcon, pos: "-left-[9%] top-[10%]", depth: 24, dur: "6s", delay: "0s", sway: "4.4s" },
+  { label: "C#", src: csharpIcon, pos: "-right-[9%] top-[2%]", depth: 30, dur: "7s", delay: "-2s", sway: "5.2s" },
+  { label: "SQL", src: sqlIcon, pos: "-right-[12%] top-[46%]", depth: 20, dur: "5.5s", delay: "-4s", sway: "4.8s" },
+  { label: "Flutter", src: flutterIcon, pos: "-left-[12%] top-[52%]", depth: 28, dur: "6.5s", delay: "-1s", sway: "5s" },
+  { label: "Firebase", src: firebaseIcon, pos: "right-[4%] top-[86%]", depth: 18, dur: "7.5s", delay: "-3s", sway: "4.2s" },
 ];
 ---
 
 <section
   id="top"
+  data-parallax-root
   class="relative overflow-hidden pt-28 pb-20 sm:pt-32 sm:pb-24"
   aria-labelledby="hero-title"
 >
@@ -50,10 +58,10 @@ const chips = [
         {dict.hero.role}
       </p>
       <p class="mt-5 max-w-xl text-lg text-muted">{dict.hero.intro}</p>
-      <ul class="mt-6 flex flex-wrap gap-2" aria-label="Skills">
+      <ul class="stagger mt-6 flex flex-wrap gap-2" aria-label="Skills">
         {
-          dict.hero.specialties.map((s) => (
-            <li>
+          dict.hero.specialties.map((s, i) => (
+            <li style={`--i:${i + 2}`}>
               <Badge tone="mint">{s}</Badge>
             </li>
           ))
@@ -75,13 +83,33 @@ const chips = [
     </div>
 
     <div class="reveal mx-auto w-full max-w-sm sm:max-w-md lg:max-w-none">
-      <div class="relative mx-auto w-[78%] max-w-[380px] lg:w-[72%]">
+      <div
+        class="relative mx-auto w-[78%] max-w-[380px] lg:w-[72%]"
+        data-parallax
+      >
         <!-- Soft glow behind: the black hoodie needs separation from the dark background. -->
         <div
-          class="hero-glow absolute -inset-10 -z-10 rounded-full"
+          class="parallax-layer absolute -inset-10 -z-10"
+          style="--depth: -14"
           aria-hidden="true"
         >
+          <div
+            class="hero-glow size-full rounded-full"
+            style="background: radial-gradient(closest-side, rgb(163 247 191 / 0.28), rgb(139 156 255 / 0.14) 55%, transparent 80%)"
+          >
+          </div>
         </div>
+        <div
+          class="parallax-layer pointer-events-none absolute -inset-6 -z-10 sm:-inset-8"
+          style="--depth: -6"
+          aria-hidden="true"
+        >
+          <div
+            class="hero-orbit size-full rounded-full border border-dashed border-line"
+          >
+          </div>
+        </div>
+        <div class="parallax-layer" style="--depth: 10">
         <Image
           src={avatar}
           alt={dict.hero.avatarAlt}
@@ -93,17 +121,28 @@ const chips = [
           decoding="async"
           class="hero-float relative w-full drop-shadow-[0_24px_40px_rgb(0_0_0/0.55)]"
         />
-        <ul
-          class="pointer-events-none absolute inset-0 hidden sm:block"
-          aria-hidden="true"
-        >
+        </div>
+        <ul class="pointer-events-none absolute inset-0" aria-hidden="true">
           {
-            chips.map((c) => (
-              <li
-                class:list={["hero-chip absolute", c.pos]}
-                style={`animation-delay: ${c.delay}`}
-              >
-                <Badge tone="lavender">{c.label}</Badge>
+            techIcons.map((t) => (
+              <li class:list={["tech-icon pointer-events-auto absolute", t.pos]}>
+                <div class="parallax-layer" style={`--depth: ${t.depth}`}>
+                  <div class="hero-chip" style={`animation-duration: ${t.dur}; animation-delay: ${t.delay}`}>
+                    <div class="tech-body" data-label={t.label} data-repel data-spin>
+                      <Image
+                        src={t.src}
+                        alt=""
+                        widths={[96, 160, 240]}
+                        sizes="(min-width: 1024px) 64px, (min-width: 640px) 56px, 44px"
+                        format="webp"
+                        loading="eager"
+                        decoding="async"
+                        class="hero-sway size-11 drop-shadow-[0_8px_14px_rgb(0_0_0/0.45)] sm:size-14 lg:size-16"
+                        style={`animation-duration: ${t.sway}`}
+                      />
+                    </div>
+                  </div>
+                </div>
               </li>
             ))
           }
@@ -135,3 +174,81 @@ const chips = [
     </div>
   </div>
 </section>
+
+<script>
+  const hero = document.querySelector<HTMLElement>("[data-parallax-root]");
+  const stage = hero?.querySelector<HTMLElement>("[data-parallax]");
+
+  if (hero && stage) {
+    // Pause the infinite animations while the hero is off screen.
+    new IntersectionObserver(([entry]) => {
+      hero.toggleAttribute("data-offscreen", !entry.isIntersecting);
+    }).observe(hero);
+
+    // Pointer parallax: mouse only, never touch or reduced motion. One rAF per frame at most.
+    if (
+      matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)")
+        .matches
+    ) {
+      let frame = 0;
+      let x = 0;
+      let y = 0;
+      const icons = [...stage.querySelectorAll<HTMLElement>("[data-repel]")];
+      let px = -9999;
+      let py = -9999;
+      const RADIUS = 150;
+      const PUSH = 44;
+      // Icons drift away from the cursor. The float wrapper (not the icon) is measured, so the
+      // push never feeds back into its own position.
+      const repel = () => {
+        for (const el of icons) {
+          const r = el.parentElement!.getBoundingClientRect();
+          const dx = r.left + r.width / 2 - px;
+          const dy = r.top + r.height / 2 - py;
+          const d = Math.hypot(dx, dy);
+          const k = d > 0 && d < RADIUS ? ((1 - d / RADIUS) * PUSH) / d : 0;
+          el.style.translate = k ? `${(dx * k).toFixed(1)}px ${(dy * k).toFixed(1)}px` : "";
+        }
+      };
+      const apply = () => {
+        frame = 0;
+        stage.style.setProperty("--mx", x.toFixed(3));
+        stage.style.setProperty("--my", y.toFixed(3));
+        repel();
+      };
+      const schedule = () => {
+        if (!frame) frame = requestAnimationFrame(apply);
+      };
+      hero.addEventListener(
+        "pointermove",
+        (e) => {
+          const r = hero.getBoundingClientRect();
+          x = ((e.clientX - r.left) / r.width - 0.5) * 2;
+          y = ((e.clientY - r.top) / r.height - 0.5) * 2;
+          px = e.clientX;
+          py = e.clientY;
+          schedule();
+        },
+        { passive: true },
+      );
+      hero.addEventListener("pointerleave", () => {
+        x = 0;
+        y = 0;
+        px = py = -9999;
+        schedule();
+      });
+    }
+
+    // Click or tap: one full spin. Works on touch too; the CSS only defines it for motion-ok users.
+    stage.addEventListener("pointerdown", (e) => {
+      const el = (e.target as HTMLElement).closest<HTMLElement>("[data-spin]");
+      if (!el) return;
+      el.classList.remove("is-spinning");
+      void el.offsetWidth; // restart the animation if it is already running
+      el.classList.add("is-spinning");
+    });
+    stage.addEventListener("animationend", (e) => {
+      if (e.animationName === "spin-once") (e.target as HTMLElement).classList.remove("is-spinning");
+    });
+  }
+</script>

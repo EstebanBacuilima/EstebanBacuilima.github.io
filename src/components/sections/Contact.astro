@@ -21,14 +21,14 @@ const channels = [
 <section id="contact" class="mx-auto max-w-6xl px-4 py-20 sm:px-6" aria-labelledby="contact-title">
   <SectionHeading id="contact-title" index="05 /" title={dict.contact.title} subtitle={dict.contact.subtitle} />
   <ul class="grid gap-4 sm:grid-cols-2">
-    {channels.map((c) => (
-      <li class="reveal">
+    {channels.map((c, i) => (
+      <li class="reveal" style={`--i:${i % 2}`}>
         <a
           href={c.href}
-          class="group flex items-center gap-4 rounded-xl border border-line bg-card p-5 transition hover:border-mint/50"
+          class="group flex items-center gap-4 rounded-xl border border-line bg-card p-5 transition duration-300 hover:-translate-y-0.5 hover:border-mint/50"
           {...c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
         >
-          <span class="flex size-11 items-center justify-center rounded-lg bg-surface text-mint"><Icon name={c.icon} /></span>
+          <span class="flex size-11 items-center justify-center rounded-lg bg-surface text-mint transition duration-300 group-hover:scale-110 group-hover:bg-mint/10"><Icon name={c.icon} /></span>
           <span class="min-w-0">
             <span class="block font-mono text-xs text-muted">{c.label}</span>
             <span class="block truncate text-ink group-hover:text-mint">{c.value}</span>
