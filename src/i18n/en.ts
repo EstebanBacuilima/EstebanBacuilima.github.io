@@ -53,12 +53,17 @@ export const en: Dict = {
     stack: 'Technologies',
     demo: 'Request a demo on WhatsApp',
     flow: 'Order states',
+    more: 'See more details',
+    less: 'See less',
   },
   stack: {
     title: 'Tech stack',
     subtitle: 'Technologies I use in my projects, and others I am familiar with.',
     legendCore: 'Most used',
     legendFamiliar: 'Used less, but familiar',
+    filterLabel: 'Filter by level of use',
+    hint: 'Tap a main technology to see its details.',
+    detail: { libs: 'Key libraries', usedIn: 'Used in' },
   },
   educational: {
     title: 'Academic projects',
@@ -70,6 +75,15 @@ export const en: Dict = {
       'Software developer with over 3 years of experience in backend and frontend development, specialized in C#/.NET, Angular and PostgreSQL, with additional experience in Flutter. I have taken part in building enterprise applications, microservices, integrations with external services and transactional features.',
       'I also build my own software products aimed at digitizing business processes, from implementation to deployment on cloud infrastructure.',
     ],
+    offDuty: {
+      toggle: "What does Esteban do when he's not coding?",
+      text: 'I like to stay active, enjoy a good movie, play video games and find new challenges, both inside and outside the world of development.',
+      items: [
+        { id: 'football', title: 'Football', text: 'Competition and teamwork' },
+        { id: 'gym', title: 'Gym', text: 'Discipline and consistency' },
+        { id: 'screen', title: 'Movies and video games', text: 'Action, adventure and sci-fi' },
+      ],
+    },
   },
   contact: {
     title: 'Contact',

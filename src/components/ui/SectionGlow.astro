@@ -1,0 +1,26 @@
+---
+interface Blob {
+  tone: 'mint' | 'lavender';
+  /** Tailwind position classes, relative to the section (negative offsets bleed into neighbours). */
+  at: string;
+  /** Peak opacity as a percentage of the tone colour. */
+  strength?: number;
+}
+interface Props {
+  blobs: Blob[];
+}
+const { blobs } = Astro.props;
+---
+
+<!-- Static soft glows: radial gradients (no filter cost) that bleed past the section edges so the
+     colour carries from one section into the next. The section must be `relative isolate`. -->
+<div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+  {
+    blobs.map((b) => (
+      <div
+        class:list={['absolute aspect-square w-[min(46rem,95vw)] rounded-full', b.at]}
+        style={`background: radial-gradient(closest-side, color-mix(in srgb, var(--color-${b.tone}) ${b.strength ?? 10}%, transparent), transparent)`}
+      />
+    ))
+  }
+</div>

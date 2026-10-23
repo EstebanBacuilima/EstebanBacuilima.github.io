@@ -23,6 +23,7 @@ html {
 }
 
 body {
+  overflow-x: clip; /* section glows bleed past the viewport edges */
   background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-sans);
@@ -74,6 +75,76 @@ body {
 }
 .tech-body:hover::after { opacity: 1; }
 
+/* Stack section --------------------------------------------------------------------------- */
+.legend-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 9999px;
+  background: rgb(21 31 44 / 0.6);
+  padding: 0.375rem 0.875rem;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  transition: all 0.2s var(--ease-fx);
+}
+html.js .legend-btn { cursor: pointer; }
+.legend-btn:hover { color: var(--color-ink); border-color: rgb(255 255 255 / 0.25); }
+.legend-btn[aria-pressed="true"] {
+  border-color: rgb(163 247 191 / 0.5);
+  background: rgb(163 247 191 / 0.1);
+  color: var(--color-mint);
+}
+
+/* Filter: the tier that does not match fades out. State lives in data-filter on the grid. */
+[data-level] { transition-property: all; }
+.stack-grid[data-filter="core"] [data-level="familiar"],
+.stack-grid[data-filter="familiar"] [data-level="core"] {
+  opacity: 0.25;
+  filter: blur(0.5px);
+}
+
+/* Spotlight: radial glow in the card and on its border, following --sx/--sy. */
+.spotlight { position: relative; }
+.spotlight > * { position: relative; z-index: 1; }
+.spotlight::before,
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.spotlight::before {
+  background: radial-gradient(300px circle at var(--sx, 50%) var(--sy, 50%), rgb(163 247 191 / 0.1), transparent 70%);
+}
+.spotlight::after {
+  padding: 1px;
+  background: radial-gradient(220px circle at var(--sx, 50%) var(--sy, 50%), rgb(163 247 191 / 0.6), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.spotlight:hover::before,
+.spotlight:hover::after { opacity: 1; }
+
+/* Popover */
+.stack-pop::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: var(--ax, 50%);
+  width: 10px;
+  height: 10px;
+  translate: -50% 0;
+  rotate: 45deg;
+  border-left: 1px solid rgb(255 255 255 / 0.1);
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  background: var(--color-card);
+}
+
 /* Hidden unless the scroll-driven animation below is supported. */
 .scroll-progress { display: none; }
 
@@ -102,6 +173,7 @@ body {
   @keyframes float { from { transform: translateY(0); } to { transform: translateY(-10px); } }
   @keyframes glow { from { opacity: 0.55; transform: scale(0.96); } to { opacity: 0.9; transform: scale(1.04); } }
   @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes tip-in { from { opacity: 0; transform: translateY(-4px) scale(0.97); } }
   @keyframes blink { 50% { opacity: 0; } }
   @keyframes sway { from { rotate: -5deg; } to { rotate: 5deg; } }
   @keyframes spin-once { to { rotate: 360deg; } }
@@ -122,6 +194,8 @@ body {
     transition: transform 0.4s var(--ease-fx);
   }
 
+  details[open] > .details-body { animation: fade-up 0.4s var(--ease-fx); }
+  .stack-pop:not([hidden]) { animation: tip-in 0.18s var(--ease-fx); }
   .wa-float { animation: pop 0.5s var(--ease-fx) 1.2s backwards; }
 
   /* Thin reading-progress bar, driven by scroll with no JS (where supported). */

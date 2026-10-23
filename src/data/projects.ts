@@ -59,12 +59,12 @@ export const projects: Project[] = [
       en: 'SaaS point of sale for restaurants and shops',
     },
     description: {
-      es: 'Sistema de punto de venta en la nube: vende, cobra, controla la caja y revisa la rentabilidad desde el navegador o un celular.',
-      en: 'Cloud point-of-sale system: sell, charge, manage the cash register and review profitability from a browser or a phone.',
+      es: 'Punto de venta en la nube para vender, cobrar y controlar la caja.',
+      en: 'Cloud point of sale to sell, charge and manage the cash register.',
     },
     tenancy: {
-      es: 'Multi-local: una empresa administra varios locales desde una sola cuenta.',
-      en: 'Multi-location: one company manages several locations from a single account.',
+      es: 'Multi-local: varios locales, una sola cuenta.',
+      en: 'Multi-location: several locations, one account.',
     },
     features: [
       { title: { es: 'Gestión de productos', en: 'Product management' }, text: { es: 'Catálogo con categorías, imágenes, SKU y búsqueda rápida.', en: 'Catalog with categories, images, SKU and fast search.' } },
@@ -97,12 +97,12 @@ export const projects: Project[] = [
       en: 'SaaS management for auto repair workshops',
     },
     description: {
-      es: 'Panel web para administrar un taller: de la recepción del vehículo y el presupuesto hasta el cobro de la orden de trabajo.',
-      en: 'Web panel to run a workshop: from vehicle intake and quotation to payment of the work order.',
+      es: 'Panel web para gestionar un taller, del presupuesto al cobro.',
+      en: 'Web panel to run a workshop, from quotation to payment.',
     },
     tenancy: {
-      es: 'Multi-taller: una empresa con varios talleres, cada uno con sus tarifas, markup e IVA.',
-      en: 'Multi-workshop: one company with several workshops, each with its own rates, markup and VAT.',
+      es: 'Multi-taller: varios talleres, una sola cuenta.',
+      en: 'Multi-workshop: several workshops, one account.',
     },
     features: [
       { title: { es: 'Órdenes de trabajo', en: 'Work orders' }, text: { es: 'Nace como presupuesto, el cliente aprueba y pasa a orden activa.', en: 'Starts as a quotation; once approved it becomes an active order.' } },
@@ -110,6 +110,7 @@ export const projects: Project[] = [
       { title: { es: 'Repuestos e inventario', en: 'Parts and inventory' }, text: { es: 'Stock por taller con descuento automático al cerrar la orden.', en: 'Stock per workshop, deducted automatically when the order closes.' } },
       { title: { es: 'Mano de obra', en: 'Labor and services' }, text: { es: 'Catálogo con precio estándar, mecánico asignado y horas trabajadas.', en: 'Catalog with standard price, assigned mechanic and hours worked.' } },
       { title: { es: 'Cobros y saldos', en: 'Payments and balances' }, text: { es: 'Totales con IVA, pagos parciales y saldo pendiente en cada orden.', en: 'Totals with VAT, partial payments and outstanding balance on each order.' } },
+      { title: { es: 'Multi-taller', en: 'Multi-workshop' }, text: { es: 'Cada taller con sus propias tarifas, markup e IVA.', en: 'Each workshop with its own rates, markup and VAT.' } },
     ],
     tech: ['Angular 22', 'TypeScript', 'Tailwind CSS', '.NET 10', 'PostgreSQL', 'Entity Framework Core'],
     screenshots: [

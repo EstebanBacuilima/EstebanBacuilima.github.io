@@ -51,12 +51,17 @@ export const es = {
     stack: 'Tecnologías',
     demo: 'Solicitar demo por WhatsApp',
     flow: 'Estados de una orden',
+    more: 'Ver más detalles',
+    less: 'Ver menos',
   },
   stack: {
     title: 'Stack tecnológico',
     subtitle: 'Tecnologías que uso en mis proyectos y otras que conozco.',
     legendCore: 'Las que más uso',
     legendFamiliar: 'Las he usado menos, pero las conozco',
+    filterLabel: 'Filtrar por nivel de uso',
+    hint: 'Toca una tecnología principal para ver su detalle.',
+    detail: { libs: 'Librerías clave', usedIn: 'Usado en' },
   },
   educational: {
     title: 'Proyectos académicos',
@@ -68,6 +73,15 @@ export const es = {
       'Desarrollador de software con más de 3 años de experiencia en desarrollo backend y frontend, especializado en C#/.NET, Angular y PostgreSQL, con experiencia adicional en Flutter. He participado en el desarrollo de aplicaciones empresariales, microservicios, integraciones con servicios externos y funcionalidades transaccionales.',
       'También desarrollo productos de software propios orientados a digitalizar procesos de negocio, desde la implementación hasta el despliegue en infraestructura cloud.',
     ],
+    offDuty: {
+      toggle: '¿Qué hace Esteban cuando no está programando?',
+      text: 'Me gusta mantenerme activo, disfrutar de una buena película, jugar videojuegos y encontrar nuevos retos, tanto dentro como fuera del mundo del desarrollo.',
+      items: [
+        { id: 'football', title: 'Fútbol', text: 'Competencia y trabajo en equipo' },
+        { id: 'gym', title: 'Gimnasio', text: 'Disciplina y constancia' },
+        { id: 'screen', title: 'Cine y videojuegos', text: 'Acción, aventura y ciencia ficción' },
+      ],
+    },
   },
   contact: {
     title: 'Contacto',

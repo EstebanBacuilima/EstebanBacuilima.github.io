@@ -1,5 +1,6 @@
 ---
 import SectionHeading from '../ui/SectionHeading.astro';
+import SectionGlow from "../ui/SectionGlow.astro";
 import Icon from '../ui/Icon.astro';
 import { t, type Locale } from '../../i18n/utils';
 import { site, whatsappUrl, mailtoUrl } from '../../data/site';
@@ -18,7 +19,14 @@ const channels = [
 ] as const;
 ---
 
-<section id="contact" class="mx-auto max-w-6xl px-4 py-20 sm:px-6" aria-labelledby="contact-title">
+<section id="contact" class="relative isolate" aria-labelledby="contact-title">
+  <SectionGlow
+    blobs={[
+      { tone: "mint", at: "left-[5%] -bottom-[30%]", strength: 14 },
+      { tone: "lavender", at: "right-[5%] -bottom-[30%]", strength: 14 },
+    ]}
+  />
+  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
   <SectionHeading id="contact-title" index="05 /" title={dict.contact.title} subtitle={dict.contact.subtitle} />
   <ul class="grid gap-4 sm:grid-cols-2">
     {channels.map((c, i) => (
@@ -37,4 +45,5 @@ const channels = [
       </li>
     ))}
   </ul>
+  </div>
 </section>

@@ -1,0 +1,39 @@
+---
+import TechIcon from './TechIcon.astro';
+import type { StackItem } from '../../data/stack';
+
+interface Props {
+  item: StackItem;
+  /** id of the popover this chip opens; only the main technologies have one. */
+  popId?: string;
+}
+const { item, popId } = Astro.props;
+
+const base =
+  'inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs transition-all duration-200 hover:-translate-y-0.5 hover:scale-105';
+const tier = {
+  core: 'border border-mint/30 bg-mint/10 text-mint shadow-[0_0_14px_-4px_var(--color-mint)] hover:border-mint/60',
+  familiar: 'border border-dashed border-line bg-bg/40 text-muted hover:border-muted hover:text-ink',
+};
+---
+
+{
+  popId ? (
+    <button
+      type="button"
+      class:list={[base, tier[item.level], 'cursor-pointer']}
+      data-level={item.level}
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-controls={popId}
+    >
+      {item.icon && <TechIcon name={item.icon} />}
+      {item.name}
+    </button>
+  ) : (
+    <span class:list={[base, tier[item.level]]} data-level={item.level}>
+      {item.icon && <TechIcon name={item.icon} />}
+      {item.name}
+    </span>
+  )
+}

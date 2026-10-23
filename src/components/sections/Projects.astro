@@ -1,5 +1,6 @@
 ---
 import SectionHeading from '../ui/SectionHeading.astro';
+import SectionGlow from "../ui/SectionGlow.astro";
 import ProjectCard from '../ui/ProjectCard.astro';
 import { projects } from '../../data/projects';
 import { t, type Locale } from '../../i18n/utils';
@@ -11,9 +12,17 @@ const { locale } = Astro.props;
 const dict = t(locale);
 ---
 
-<section id="projects" class="mx-auto max-w-6xl px-4 py-20 sm:px-6" aria-labelledby="projects-title">
-  <SectionHeading id="projects-title" index="01 /" title={dict.projects.title} subtitle={dict.projects.subtitle} />
+<section id="projects" class="relative isolate" aria-labelledby="projects-title">
+  <SectionGlow
+    blobs={[
+      { tone: "mint", at: "-left-[15%] top-0 -translate-y-1/2", strength: 9 },
+      { tone: "lavender", at: "-right-[20%] top-[45%]", strength: 7 },
+    ]}
+  />
+  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+  <SectionHeading id="projects-title" index="04 /" title={dict.projects.title} subtitle={dict.projects.subtitle} />
   <div class="space-y-10">
     {projects.map((p) => <ProjectCard project={p} locale={locale} />)}
+  </div>
   </div>
 </section>

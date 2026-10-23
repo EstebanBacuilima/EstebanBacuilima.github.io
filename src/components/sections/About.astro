@@ -1,19 +1,89 @@
 ---
+import { Image } from 'astro:assets';
 import SectionHeading from '../ui/SectionHeading.astro';
+import SectionGlow from "../ui/SectionGlow.astro";
 import { t, type Locale } from '../../i18n/utils';
+import footballIcon from '../../assets/icons/football.webp';
+import gymIcon from '../../assets/icons/gym.avif';
+import videogamesIcon from '../../assets/icons/videogames.webp';
+import cineIcon from '../../assets/icons/cine.webp';
 
 interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
 const dict = t(locale);
+
+// Icon(s) per hobby; the last card pairs video games and cinema.
+const hobbyIcons = {
+  football: [footballIcon],
+  gym: [gymIcon],
+  screen: [videogamesIcon, cineIcon],
+};
 ---
 
-<section id="about" class="border-y border-line bg-surface py-20" aria-labelledby="about-title">
+<section id="about" class="relative isolate py-20" aria-labelledby="about-title">
+  <SectionGlow
+    blobs={[
+      { tone: "mint", at: "left-[10%] top-1/2 -translate-y-1/2", strength: 9 },
+      { tone: "lavender", at: "-right-[15%] -bottom-[20%]", strength: 8 },
+    ]}
+  />
   <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <SectionHeading id="about-title" index="04 /" title={dict.about.title} />
+    <SectionHeading id="about-title" index="01 /" title={dict.about.title} />
     <div class="reveal max-w-2xl space-y-4 text-lg text-muted">
       {dict.about.paragraphs.map((p) => <p>{p}</p>)}
     </div>
+
+    <!-- Native <details>: opens on click or Enter/Space, no JavaScript. Its content carries no
+         `.reveal`: hidden elements are never observed, so they would stay invisible once opened. -->
+    <details class="reveal group mt-14">
+      <summary
+        class="inline-flex cursor-pointer list-none items-center gap-3 rounded-xl border border-white/10 bg-card/60 px-5 py-3 text-ink backdrop-blur-md transition-colors duration-300 hover:border-mint/40 hover:text-mint [&::-webkit-details-marker]:hidden"
+      >
+        <span class="font-medium">{dict.about.offDuty.toggle}</span>
+        <svg
+          class="size-4 shrink-0 text-mint transition-transform duration-300 group-open:rotate-180"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </summary>
+
+      <div class="details-body mt-6">
+        <p class="max-w-2xl text-muted">{dict.about.offDuty.text}</p>
+        <ul class="mt-8 grid gap-4 sm:grid-cols-3">
+          {
+            dict.about.offDuty.items.map((item) => (
+              <li class="group/hobby rounded-2xl border border-white/10 bg-card/60 p-5 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-mint/40">
+                <div class="flex items-center gap-3">
+                  {hobbyIcons[item.id as keyof typeof hobbyIcons].map((icon) => (
+                    <Image
+                      src={icon}
+                      alt=""
+                      widths={[96, 160, 240]}
+                      sizes="64px"
+                      format="webp"
+                      loading="lazy"
+                      decoding="async"
+                      class="size-16 object-contain drop-shadow-[0_6px_10px_rgb(0_0_0/0.4)] transition-transform duration-300 group-hover/hobby:scale-110"
+                    />
+                  ))}
+                </div>
+                <h4 class="mt-4 font-semibold text-ink">{item.title}</h4>
+                <p class="mt-1 text-sm text-muted">{item.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </details>
   </div>
 </section>

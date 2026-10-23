@@ -16,46 +16,19 @@ const dict = t(locale);
 ---
 
 <article class="reveal overflow-hidden rounded-2xl border border-line bg-card transition-colors duration-300 hover:border-mint/30" aria-labelledby={`${project.id}-name`}>
-  <div class="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_1.25fr]">
+  <!-- Collapsed view: just what identifies the product, plus the screenshots. -->
+  <div class="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_1.35fr] lg:items-center">
     <div>
       <Badge tone="lavender">SaaS</Badge>
       <h3 id={`${project.id}-name`} class="mt-3 text-3xl font-bold text-ink">{project.name}</h3>
       <p class="mt-1 text-lg text-mint">{project.tagline[locale]}</p>
-      <p class="mt-4 text-muted">{project.description[locale]}</p>
-      <p class="mt-4 rounded-lg border border-mint/20 bg-mint/5 px-4 py-3 text-sm text-ink">{project.tenancy[locale]}</p>
-
-      <h4 class="mt-6 font-mono text-sm text-muted">{dict.projects.features}</h4>
-      <ul class="stagger mt-3 space-y-3">
-        {project.features.map((f, i) => (
-          <li class="flex gap-3" style={`--i:${i}`}>
-            <Icon name="check" class="mt-0.5 size-4 shrink-0 text-mint" />
-            <span class="text-sm text-muted"><strong class="font-semibold text-ink">{f.title[locale]}.</strong> {f.text[locale]}</span>
-          </li>
-        ))}
-      </ul>
-
-      {project.flow && (
-        <div class="mt-6">
-          <h4 class="font-mono text-sm text-muted">{dict.projects.flow}</h4>
-          <ol class="stagger mt-3 flex flex-wrap items-center gap-2 text-xs text-ink">
-            {project.flow[locale].map((step, i, all) => (
-              <li class="flex items-center gap-2" style={`--i:${i}`}>
-                <span class="rounded-md border border-line bg-surface px-2.5 py-1">{step}</span>
-                {i < all.length - 1 && <span class="text-mint" aria-hidden="true">→</span>}
-              </li>
-            ))}
-          </ol>
-        </div>
-      )}
-
-      <h4 class="mt-6 font-mono text-sm text-muted">{dict.projects.stack}</h4>
-      <ul class="mt-3 flex flex-wrap gap-2">
-        {project.tech.map((tech) => <li><Badge>{tech}</Badge></li>)}
-      </ul>
-
-      <Button href={whatsappUrl(project.demoMessage[locale])} external icon="whatsapp" class="mt-8">
-        {dict.projects.demo}
-      </Button>
+      <p class="mt-3 text-muted">{project.description[locale]}</p>
+      <p class="mt-4 inline-flex rounded-lg border border-mint/20 bg-mint/5 px-3 py-1.5 text-sm text-ink">{project.tenancy[locale]}</p>
+      <div class="mt-6">
+        <Button href={whatsappUrl(project.demoMessage[locale])} external icon="whatsapp">
+          {dict.projects.demo}
+        </Button>
+      </div>
     </div>
 
     <div class="min-w-0">
@@ -65,7 +38,7 @@ const dict = t(locale);
         aria-label={`${dict.a11y.gallery} — ${project.name}`}
         tabindex="0"
       >
-        {project.screenshots.map((s, i) => (
+        {project.screenshots.map((s) => (
           <figure class="group/shot w-[88%] shrink-0 snap-center sm:w-[92%]">
             <div class="overflow-hidden rounded-lg border border-line bg-surface">
               <div class="flex gap-1.5 border-b border-line px-3 py-2" aria-hidden="true">
@@ -77,7 +50,7 @@ const dict = t(locale);
                 widths={[480, 800, 1200]}
                 sizes="(min-width: 1024px) 560px, 88vw"
                 format="webp"
-                loading={i === 0 ? 'eager' : 'lazy'}
+                loading="lazy"
                 decoding="async"
                 class="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 ease-out group-hover/shot:scale-[1.03]"
               />
@@ -88,4 +61,51 @@ const dict = t(locale);
       </div>
     </div>
   </div>
+
+  <!-- Native <details>: keyboard and screen-reader friendly, no JavaScript. -->
+  <details class="group border-t border-line">
+    <summary
+      class="flex cursor-pointer list-none items-center justify-center gap-2 px-6 py-3.5 text-sm font-medium text-muted transition-colors hover:text-mint [&::-webkit-details-marker]:hidden"
+    >
+      <span class="group-open:hidden">{dict.projects.more}</span>
+      <span class="hidden group-open:inline">{dict.projects.less}</span>
+      <svg class="size-4 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M6 9l6 6 6-6" />
+      </svg>
+    </summary>
+
+    <div class="details-body grid gap-8 px-6 pb-8 pt-2 sm:px-8 lg:grid-cols-[1.5fr_1fr]">
+      <div>
+        <h4 class="font-mono text-sm text-muted">{dict.projects.features}</h4>
+        <ul class="mt-3 grid gap-x-6 gap-y-3 sm:grid-cols-2">
+          {project.features.map((f) => (
+            <li class="flex gap-3">
+              <Icon name="check" class="mt-0.5 size-4 shrink-0 text-mint" />
+              <span class="text-sm text-muted"><strong class="font-semibold text-ink">{f.title[locale]}.</strong> {f.text[locale]}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        {project.flow && (
+          <>
+            <h4 class="font-mono text-sm text-muted">{dict.projects.flow}</h4>
+            <ol class="mt-3 mb-6 flex flex-wrap items-center gap-2 text-xs text-ink">
+              {project.flow[locale].map((step, i, all) => (
+                <li class="flex items-center gap-2">
+                  <span class="rounded-md border border-line bg-surface px-2.5 py-1">{step}</span>
+                  {i < all.length - 1 && <span class="text-mint" aria-hidden="true">→</span>}
+                </li>
+              ))}
+            </ol>
+          </>
+        )}
+        <h4 class="font-mono text-sm text-muted">{dict.projects.stack}</h4>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          {project.tech.map((tech) => <li><Badge>{tech}</Badge></li>)}
+        </ul>
+      </div>
+    </div>
+  </details>
 </article>
