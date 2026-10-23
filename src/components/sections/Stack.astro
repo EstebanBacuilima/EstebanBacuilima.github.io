@@ -1,0 +1,56 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import Badge from "../ui/Badge.astro";
+import { stackGroups } from "../../data/stack";
+import { t, type Locale } from "../../i18n/utils";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const dict = t(locale);
+---
+
+<section
+  id="stack"
+  class="border-y border-line bg-surface py-20"
+  aria-labelledby="stack-title"
+>
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <SectionHeading
+      id="stack-title"
+      index="02 /"
+      title={dict.stack.title}
+      subtitle={dict.stack.subtitle}
+    />
+    <ul class="reveal mb-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
+      <li class="flex items-center gap-2">
+        <Badge tone="mint">abc</Badge>{dict.stack.legendCore}
+      </li>
+      <li class="flex items-center gap-2">
+        <Badge tone="lavender" dashed>abc</Badge>{dict.stack.legendFamiliar}
+      </li>
+    </ul>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        stackGroups.map((g) => (
+          <div class="reveal rounded-xl border border-line bg-card p-5 transition hover:border-mint/40">
+            <h3 class="font-mono text-sm text-mint">{g.title[locale]}</h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {g.items.map((item) => (
+                <li>
+                  <Badge
+                    tone={item.level === "core" ? "mint" : "lavender"}
+                    dashed={item.level === "familiar"}
+                  >
+                    {item.name}
+                  </Badge>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

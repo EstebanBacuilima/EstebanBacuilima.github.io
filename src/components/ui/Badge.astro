@@ -1,0 +1,17 @@
+---
+interface Props {
+  tone?: 'mint' | 'lavender' | 'neutral';
+  /** Dashed border: a non-color cue for the secondary tier. */
+  dashed?: boolean;
+}
+const { tone = 'neutral', dashed = false } = Astro.props;
+const tones = {
+  mint: 'border-mint/30 bg-mint/10 text-mint',
+  lavender: 'border-lavender/30 bg-lavender/10 text-lavender',
+  neutral: 'border-line bg-surface text-muted',
+};
+---
+
+<span class:list={[dashed && 'border-dashed', 'inline-flex items-center rounded-md border px-2.5 py-1 font-mono text-xs', tones[tone]]}>
+  <slot />
+</span>

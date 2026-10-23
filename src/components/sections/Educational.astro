@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Badge from '../ui/Badge.astro';
+import { educationalProjects } from '../../data/projects';
+import { t, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const dict = t(locale);
+---
+
+<section id="educational" class="mx-auto max-w-6xl px-4 py-20 sm:px-6" aria-labelledby="educational-title">
+  <SectionHeading id="educational-title" index="03 /" title={dict.educational.title} subtitle={dict.educational.subtitle} />
+  <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    {educationalProjects.map((p) => (
+      <li class="reveal group overflow-hidden rounded-xl border border-line bg-card transition hover:-translate-y-1 hover:border-mint/40">
+        <Image
+          src={p.image}
+          alt=""
+          widths={[400, 700]}
+          sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 92vw"
+          format="webp"
+          loading="lazy"
+          decoding="async"
+          class="aspect-video w-full object-cover object-top"
+        />
+        <div class="p-5">
+          <p class="font-mono text-xs text-lavender">{p.kind[locale]}</p>
+          <h3 class="mt-1 text-lg font-semibold text-ink">{p.title[locale]}</h3>
+          {p.tech.length > 0 && (
+            <ul class="mt-3 flex flex-wrap gap-2">{p.tech.map((x) => <li><Badge>{x}</Badge></li>)}</ul>
+          )}
+        </div>
+      </li>
+    ))}
+  </ul>
+</section>

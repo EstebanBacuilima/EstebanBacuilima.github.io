@@ -1,0 +1,28 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary';
+  external?: boolean;
+  icon?: 'whatsapp' | 'download' | 'arrow' | 'mail' | 'github' | 'linkedin';
+  class?: string;
+}
+const { href, variant = 'primary', external = false, icon, class: className = '' } = Astro.props;
+
+const base =
+  'group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition duration-200 active:scale-[0.98]';
+const styles = {
+  primary: 'bg-mint text-bg hover:bg-white',
+  secondary: 'border border-line bg-card text-ink hover:border-mint/60 hover:text-mint',
+};
+---
+
+<a
+  href={href}
+  class:list={[base, styles[variant], className]}
+  {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+>
+  {icon && <Icon name={icon} class="size-4" />}
+  <slot />
+</a>

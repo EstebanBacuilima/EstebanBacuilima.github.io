@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://estebanbacuilima.github.io/sitemap-index.xml

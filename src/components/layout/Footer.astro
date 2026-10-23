@@ -1,0 +1,38 @@
+---
+import Icon from '../ui/Icon.astro';
+import { t, type Locale } from '../../i18n/utils';
+import { site } from '../../data/site';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const dict = t(locale);
+const year = new Date().getFullYear();
+
+const links = [
+  { href: '#projects', label: dict.nav.projects },
+  { href: '#stack', label: dict.nav.stack },
+  { href: '#about', label: dict.nav.about },
+  { href: '#contact', label: dict.nav.contact },
+];
+---
+
+<footer class="border-t border-line bg-surface">
+  <div class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:px-6 md:flex-row md:items-center md:justify-between">
+    <div>
+      <p class="font-mono text-sm text-ink"><span class="text-mint" aria-hidden="true">&lt;/&gt;</span> {dict.footer.rights}</p>
+      <p class="mt-1 text-sm text-muted">© {year} · {dict.footer.built}</p>
+    </div>
+    <nav aria-label={dict.a11y.footerNav}>
+      <ul class="flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
+        {links.map((l) => <li><a href={l.href} class="hover:text-mint">{l.label}</a></li>)}
+        <li><a href="#top" class="hover:text-mint">{dict.footer.top}</a></li>
+      </ul>
+    </nav>
+    <ul class="flex gap-3 text-muted">
+      <li><a href={site.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-mint"><Icon name="github" /></a></li>
+      <li><a href={site.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-mint"><Icon name="linkedin" /></a></li>
+    </ul>
+  </div>
+</footer>
